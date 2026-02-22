@@ -36,7 +36,7 @@ const isActive = (id: string) => props.activeId === id;
                 <div class="connection-meta">
                     <span class="connection-name">{{ connection.name }}</span>
                     <span class="connection-detail">
-                        {{ connection.database }} · {{ connection.authType }}
+                        {{ connection.database || "Database not selected" }} · {{ connection.authType }}
                     </span>
                 </div>
                 <div>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { GridColumn } from "../lib/grid";
-import type { RowData } from "../lib/sample-data";
+import type { RowData } from "../lib/types";
 
-const props = defineProps<{
+defineProps<{
     columns: GridColumn[];
     rows: RowData[];
 }>();
@@ -36,7 +36,15 @@ const onDragOver = (event: DragEvent) => {
 
 const getCellValue = (row: RowData, field: string) => {
     const value = row[field];
-    return value === null || value === undefined ? "" : String(value);
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    if (typeof value === "object") {
+        return JSON.stringify(value);
+    }
+
+    return String(value);
 };
 </script>
 
@@ -52,7 +60,7 @@ const getCellValue = (row: RowData, field: string) => {
                 @dragover="onDragOver"
                 @drop="onDrop($event, column.id)"
             >
-                <span>↔</span>
+                <span>&lt;&gt;</span>
                 <span>{{ column.label }}</span>
             </div>
         </div>

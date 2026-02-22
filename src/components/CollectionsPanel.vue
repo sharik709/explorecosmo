@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { CollectionData } from "../lib/sample-data";
+import type { CosmosCollection } from "../lib/types";
 
 const props = defineProps<{
-    collections: CollectionData[];
+    collections: CosmosCollection[];
     activeId: string | null;
 }>();
 
@@ -19,23 +19,20 @@ const isActive = (id: string) => props.activeId === id;
             <span class="panel-title">Collections</span>
             <span class="badge">{{ collections.length }}</span>
         </div>
-        <div v-if="collections.length === 0" class="empty-state">
-            Connect to a database to load collections.
+        <div v-if="collections.length === 0" class="empty-state compact">
+            No collections loaded.
         </div>
-        <div v-else>
-            <button
-                v-for="collection in collections"
-                :key="collection.id"
-                class="collection-item"
-                :class="{ active: isActive(collection.id) }"
-                type="button"
-                @click="emit('select', collection.id)"
-            >
-                <div class="collection-meta">
-                    <span class="collection-name">{{ collection.name }}</span>
-                    <span class="collection-detail">{{ collection.description }}</span>
-                </div>
-            </button>
-        </div>
+        <ul v-else class="collection-list">
+            <li v-for="collection in collections" :key="collection.id">
+                <button
+                    class="collection-list-item"
+                    :class="{ active: isActive(collection.id) }"
+                    type="button"
+                    @click="emit('select', collection.id)"
+                >
+                    {{ collection.id }}
+                </button>
+            </li>
+        </ul>
     </section>
 </template>

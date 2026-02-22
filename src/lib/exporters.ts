@@ -1,4 +1,4 @@
-import type { RowData } from "./sample-data";
+import type { RowData } from "./types";
 
 const escapeCsvValue = (value: string) => {
     const escaped = value.split('"').join('""');

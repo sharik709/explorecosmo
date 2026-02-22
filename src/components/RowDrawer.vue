@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RowData } from "../lib/sample-data";
+import type { RowData } from "../lib/types";
 
 const props = defineProps<{
     row: RowData | null;
@@ -16,7 +16,15 @@ const getValue = (field: string) => {
         return "";
     }
     const value = props.row[field];
-    return value === null || value === undefined ? "" : String(value);
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    if (typeof value === "object") {
+        return JSON.stringify(value);
+    }
+
+    return String(value);
 };
 </script>
 
